@@ -4,20 +4,18 @@ function partial() {
   var bindArguments = [];
   for (var i = 1; i < arguments.length; i += 1) {
     // i - 1 as init i value is 1
-    bindArguments[i - 1] = arguments[i];
+    bindArguments.push(arguments[i]);
   }
 
   return function foo() {
     var fnArguments = [];
     // copy values from bindArguments
     for (var k = 0; k < bindArguments.length; k += 1) {
-      fnArguments[k] = bindArguments[k];
+      fnArguments.push(bindArguments[k]);
     }
 
-    var initIndex = fnArguments.length;
     for (var j = 0; j < arguments.length; j += 1) {
-      // Is it Array.push available?
-      fnArguments[initIndex + j] = arguments[j];
+      fnArguments.push(arguments[j]);
     }
     return fn.apply(null, fnArguments);
   }

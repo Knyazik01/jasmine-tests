@@ -2,8 +2,7 @@ function filter(arr, fn) {
   var result = [];
   for (var i = 0; i < arr.length; i += 1) {
     if (fn(arr[i])) {
-      // Is it Array.push available?
-      result[result.length] = arr[i];
+      result.push(arr[i]);
     }
   }
 

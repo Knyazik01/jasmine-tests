@@ -3,8 +3,7 @@ var sequence = require('./step1.js');
 function take(fn, count) {
   var result = [];
   for (var i = 0; i < count; i += 1) {
-    // Is it Array.push available?
-    result[i] = fn();
+    result.push(fn());
   }
 
   return result;

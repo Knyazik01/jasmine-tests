@@ -14,30 +14,27 @@ function partialAny() {
   var fn = arguments[0];
   var bindArguments = [];
   for (var i = 1; i < arguments.length; i += 1) {
-    // i - 1 as init i value is 1
-    bindArguments[i - 1] = arguments[i];
+    bindArguments.push(arguments[i]);
   }
 
   return function foo() {
     var fnArguments = [];
     // copy values from bindArguments
     for (var k = 0; k < bindArguments.length; k += 1) {
-      fnArguments[k] = bindArguments[k];
+      fnArguments.push(bindArguments[k]);
     }
 
     var firstUndefinedIndex = getFirstUndefinedIndex(fnArguments);
     for (var j = 0; j < arguments.length; j += 1) {
-      var index = firstUndefinedIndex;
+      var noUndefinedElement = firstUndefinedIndex === -1;
       // if firstUndefinedIndex == -1 -> set index array.length
-      if (firstUndefinedIndex == -1) {
-        index = fnArguments.length;
-      }
+      if (noUndefinedElement) {
+        fnArguments.push(arguments[j]);
+      } else {
+        // put value into array
+        fnArguments[firstUndefinedIndex] = arguments[j];
 
-      // put value into array
-      fnArguments[index] = arguments[j];
-
-      // if firstUndefinedIndex != -1 -> update it value
-      if (firstUndefinedIndex != -1) {
+        // as undefined exist -> update firstUndefinedIndex value
         firstUndefinedIndex = getFirstUndefinedIndex(fnArguments);
       }
     }
